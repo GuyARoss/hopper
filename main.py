@@ -1,6 +1,7 @@
 import os
 import sys
 import pathlib
+import time
 
 from local_player import LocalPlayer
 
@@ -15,20 +16,33 @@ def keyword_downloader(query: str):
 
     download_videos(
         list(map(lambda x: x['uri'], resp)),
-        f'{PATH}/temp',
+        f'{PATH}/temp/{query}',
     )
 
 
-def player():
-    dirs = os.listdir(f'{PATH}/temp')
-    player = LocalPlayer()
-    
+def play(query:str, player: LocalPlayer):
+    dirs = os.listdir(f'{PATH}/temp/{query}')
+
+    while len(dirs) <= 1:
+        dirs = os.listdir(f'{PATH}/temp/{query}')
+        time.sleep(5)
+
+
     for dir in dirs:
-        player.play_video(f'{PATH}/temp/{dir}')
+        player.play_video(f'{PATH}/temp/{query}/{dir}')
 
 
 if __name__ == '__main__':
-    keyword_downloader(sys.argv[1])
+    type = sys.argv[1]
+    query = sys.argv[2]
+    
+    if not os.path.exists(f'{PATH}/temp/{query}'):
+        os.mkdir(f'{PATH}/temp/{query}')
 
-    while True:
-        player()
+    if type == 'dwn':    
+        keyword_downloader(query)
+
+    if type == 'ply':
+        player = LocalPlayer()
+        while True:
+            play(query, player)

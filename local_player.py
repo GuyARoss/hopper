@@ -16,6 +16,9 @@ class LocalPlayer():
         player.set_mute(self.muted)
 
         fps = video.get(cv2.CAP_PROP_FPS)
+        if fps == 0:
+            return
+            
         sleep_ms = int(np.round((1/fps)*1000) /3)
 
         while True:

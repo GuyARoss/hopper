@@ -1,0 +1,1 @@
+python3 $HOME/Documents/dev/hopper/main.py ply $1 & python3 $HOME/Documents/dev/hopper/main.py dwn $1
