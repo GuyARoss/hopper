@@ -36,6 +36,9 @@ if __name__ == '__main__':
     type = sys.argv[1]
     query = sys.argv[2]
     
+    if not os.path.exists(f'{PATH}/temp'):
+        os.mkdir(f'{PATH}/temp  ')
+
     if not os.path.exists(f'{PATH}/temp/{query}'):
         os.mkdir(f'{PATH}/temp/{query}')
 
